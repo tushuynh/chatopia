@@ -16,15 +16,14 @@ module.exports.register = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
+    const user = (await User.create({
       email,
       username,
       password: hashedPassword,
-    });
+    })).toObject()
 
-    const responseUser = user.toObject();
-    delete responseUser.password;
-    return res.json({ status: true, user: responseUser });
+    delete user.password;
+    return res.json({ status: true, user });
   } catch (error) {
     next(error);
   }
@@ -34,7 +33,7 @@ module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
+    const user = (await User.findOne({ username })).toObject()
     if (!user) {
       return res.json({ msg: 'Incorrect username.', status: false });
     }
@@ -44,18 +43,15 @@ module.exports.login = async (req, res, next) => {
       return res.json({ msg: 'Incorrect password.', status: false });
     }
 
-    const responseUser = user.toObject();
-    delete responseUser.password;
-    return res.json({ status: true, user: responseUser });
+    delete user.password;
+    return res.json({ status: true, user });
   } catch (error) {
     next(error);
   }
 };
 
 module.exports.setAvatar = async (req, res, next) => {
-  console.log('here')
   try {
-    console.log('here')
     const userId = req.params.id;
     const avatarImage = req.body.image;
     const userData = await User.findByIdAndUpdate(

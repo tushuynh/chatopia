@@ -41,18 +41,3 @@ module.exports.getAllMessages = async (req, res, next) => {
     next(error);
   }
 };
-
-// test
-module.exports.findAll = async (req, res, next) => {
-  try {
-    const data = await messageModel.find()
-
-    const response = data.map(item => item.toJSON())
-
-    console.log(data)
-
-    res.json(data)
-  } catch (error) {
-    next(error)
-  }
-}

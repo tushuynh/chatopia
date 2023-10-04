@@ -74,7 +74,7 @@ export default function ChatContainer({ currentChat, currentUser, socket }) {
                 <h3>{currentChat.username}</h3>
               </div>
             </div>
-            <Logout />
+            <Logout userId={currentUser._id} socket={socket} />
           </div>
           <div className="chat-messages">
             {messages.map((message) => {

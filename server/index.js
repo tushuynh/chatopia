@@ -54,4 +54,8 @@ io.on('connection', (socket) => {
       socket.to(sendUserSocket).emit('msg-receive', data.message);
     }
   });
+
+  socket.on('log-out', (userId) => {
+    onlineUsers.delete(userId)
+  })
 });

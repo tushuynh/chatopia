@@ -41,7 +41,6 @@ function Chat() {
           const { data } = await axios.get(
             `${allUsersRoute}/${currentUser._id}`
           );
-          console.log(data);
           setContacts(data);
         } else {
           navigate('/setAvatar');
