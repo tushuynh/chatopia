@@ -79,7 +79,7 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
                     />
                   </div>
                   <div className="username">
-                    <h3>{contact.username}</h3>
+                    <h3>{contact.displayName}</h3>
                   </div>
                 </div>
               );
@@ -202,6 +202,7 @@ const Container = styled.div`
         border-radius: 0.4rem;
         padding: 0.5rem;
         font-size: 1.5rem;
+        width: 90%
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {
