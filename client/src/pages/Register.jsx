@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,9 +8,9 @@ import axios from 'axios';
 
 import { registerRoute } from '../utils/APIRoutes';
 
-function Register() {
-  const navigate = useNavigate()
-  const [values, setValues] = useState({
+export default function Register() {
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({
     username: '',
     email: '',
     password: '',
@@ -26,16 +26,17 @@ function Register() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('chat-app-user')) {
-      navigate('/')
+    const user = localStorage.getItem('chat-app-user');
+    if (user) {
+      navigate('/');
     }
-  }, [])
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (handleValidation()) {
-      const { password, username, email } = values;
+      const { password, username, email } = userInfo;
       const { data } = await axios.post(registerRoute, {
         username,
         email,
@@ -46,21 +47,19 @@ function Register() {
         toast.error(data.msg, toastOptions);
       } else if (data.status === true) {
         localStorage.setItem('chat-app-user', JSON.stringify(data.user));
-        navigate('/')
+        navigate('/');
       }
-
     }
   };
 
   const handleValidation = () => {
-    const { password, confirmPassword, username, email } = values;
+    const { password, confirmPassword, username, email } = userInfo;
 
     if (password !== confirmPassword) {
       toast.error(
         'Password and confirm password should be same.',
         toastOptions
       );
-
       return false;
     } else if (username.length < 3) {
       toast.error(
@@ -83,8 +82,9 @@ function Register() {
   };
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
   };
+
   return (
     <>
       <FormContainer>
@@ -119,7 +119,7 @@ function Register() {
           />
           <button type="submit">Create user</button>
           <span>
-            Already have an account? <Link to="/login">Login</Link>
+            Already have an account? <a href="/login">Login</a>
           </span>
         </form>
       </FormContainer>
@@ -189,7 +189,7 @@ const FormContainer = styled.div`
       text-transform: uppercase;
       transition: 0.5s ease-in-out;
 
-      $:hover {
+      &:hover {
         background-color: #4e0eff;
       }
     }
@@ -206,5 +206,3 @@ const FormContainer = styled.div`
     }
   }
 `;
-
-export default Register;

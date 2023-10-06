@@ -68,7 +68,7 @@ export default function SetAvatar() {
     };
 
     fetchData().catch(console.log);
-  }, []);
+  }, [api]);
 
   return (
     <>
@@ -143,6 +143,7 @@ const Container = styled.div`
       transition: 0.5s ease-in-out;
       img {
         height: 6rem;
+        cursor: pointer;
       }
     }
 

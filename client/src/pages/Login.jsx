@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,9 +8,9 @@ import axios from 'axios';
 
 import { loginRoute } from '../utils/APIRoutes';
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({
+  const [loginInfo, setLoginInfo] = useState({
     username: '',
     password: '',
   });
@@ -27,13 +27,13 @@ function Login() {
     if (localStorage.getItem('chat-app-user')) {
       navigate('/')
     }
-  }, [])
+  }, [navigate])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (handleValidation()) {
-      const { password, username } = values;
+      const { password, username } = loginInfo;
       const { data } = await axios.post(loginRoute, {
         username,
         password,
@@ -49,7 +49,7 @@ function Login() {
   };
 
   const handleValidation = () => {
-    const { password, username } = values;
+    const { password, username } = loginInfo;
 
     if (username === '') {
       toast.error('Email and password is required.', toastOptions);
@@ -63,7 +63,7 @@ function Login() {
   };
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    setLoginInfo({ ...loginInfo, [event.target.name]: event.target.value });
   };
   return (
     <>
@@ -88,7 +88,7 @@ function Login() {
           />
           <button type="submit">Login In</button>
           <span>
-            Don't have an account ? <Link to="/register">Register</Link>
+            Don't have an account ? <a href="/register">Register</a>
           </span>
         </form>
       </FormContainer>
@@ -175,5 +175,3 @@ const FormContainer = styled.div`
     }
   }
 `;
-
-export default Login;

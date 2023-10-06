@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
     max: 20,
     unique: true,
   },
+  displayName: {
+    type: String,
+    max: 20,
+  },
   email: {
     type: String,
     required: true,
@@ -18,6 +22,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     min: 8,
+    select: false,
   },
   isAvatarImageSet: {
     type: Boolean,

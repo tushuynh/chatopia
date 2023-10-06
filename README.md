@@ -1,7 +1,7 @@
 # Set up
 Frontend
 ```
-cd public/ && npm i
+cd client/ && npm i
 ```
 
 Backend
@@ -14,7 +14,7 @@ Config environment (FE & BE) follow by .env.example
 # Run app
 Frontend
 ```
-cd public/ && npm start
+cd client/ && npm start
 ```
 
 Backend

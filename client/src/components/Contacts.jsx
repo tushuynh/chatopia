@@ -1,27 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
+import axios from 'axios';
+import { setDisplayNameRoute } from '../utils/APIRoutes';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Contacts({ contacts, currentUser, changeChat }) {
-  const [currentUserName, setCurrentUserName] = useState(undefined);
+  const [currentUsername, setCurrentUsername] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [isEditDisplayName, setIsEditDisplayName] = useState(false);
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'dark',
+  };
 
   useEffect(() => {
     if (currentUser) {
       setCurrentUserImage(currentUser.avatarImage);
-      setCurrentUserName(currentUser.username);
+      setCurrentUsername(currentUser.displayName);
     }
   }, [currentUser]);
 
   const changeCurrentChat = (index, contact) => {
-    setCurrentSelected(index)
-    changeChat(contact)
+    setCurrentSelected(index);
+    changeChat(contact);
+  };
+
+  const editDisplayName = () => {
+    setIsEditDisplayName(true);
+  };
+
+  const setDisplayName = async (e) => {
+    const displayName = e.target.value;
+
+    if (!displayName) {
+      toast.error(`User's name must not be empty`, toastOptions);
+      setIsEditDisplayName(false);
+      return;
+    }
+
+    const { data } = await axios.post(
+      `${setDisplayNameRoute}/${currentUser._id}`,
+      {
+        displayName,
+      }
+    );
+
+    setCurrentUsername(data.displayName);
+    setIsEditDisplayName(false);
   };
 
   return (
     <>
-      {currentUserImage && currentUserName && (
+      {currentUserImage && currentUsername && (
         <Container>
           <div className="brand">
             <img src={Logo} alt="logo" />
@@ -52,15 +87,28 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
           </div>
           <div className="current-user">
             <div className="avatar">
-              <img
-                src={`data:image/svg+xml;base64,${currentUserImage}`}
-                alt="avatar"
-              />
+              <a href="/setAvatar">
+                <img
+                  src={`data:image/svg+xml;base64,${currentUserImage}`}
+                  alt="avatar"
+                />
+              </a>
             </div>
             <div className="username">
-              <h2>{currentUser.username}</h2>
+              {isEditDisplayName === true ? (
+                <input
+                  type="text"
+                  name="displayName"
+                  id=""
+                  autoFocus={true}
+                  onBlur={(e) => setDisplayName(e)}
+                />
+              ) : (
+                <h2 onDoubleClick={editDisplayName}>{currentUsername}</h2>
+              )}
             </div>
           </div>
+          <ToastContainer />
         </Container>
       )}
     </>
@@ -127,7 +175,7 @@ const Container = styled.div`
       background-color: #9186f3;
     }
   }
-  
+
   .current-user {
     background-color: #0d0d30;
     display: flex;
@@ -135,14 +183,25 @@ const Container = styled.div`
     align-items: center;
     gap: 2rem;
     .avatar {
+      margin-left: 1.5rem;
       img {
         height: 4rem;
         max-inline-size: 100%;
       }
     }
     .username {
+      width: 80%;
       h2 {
         color: white;
+        font-size: 1.5rem;
+      }
+      input {
+        background-color: transparent;
+        border: 0.1rem solid transparent;
+        color: white;
+        border-radius: 0.4rem;
+        padding: 0.5rem;
+        font-size: 1.5rem;
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {
@@ -153,5 +212,9 @@ const Container = styled.div`
         }
       }
     }
+  }
+
+  .Toastify {
+    position: absolute;
   }
 `;

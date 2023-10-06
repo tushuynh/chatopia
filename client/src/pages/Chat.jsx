@@ -8,7 +8,7 @@ import Welcome from '../components/Welcome';
 import ChatContainer from '../components/ChatContainer';
 import { io } from 'socket.io-client';
 
-function Chat() {
+export default function Chat() {
   const socket = useRef();
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
@@ -17,7 +17,7 @@ function Chat() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    (async function test() {
+    (async () => {
       if (!localStorage.getItem('chat-app-user')) {
         navigate('/login');
       } else {
@@ -96,5 +96,3 @@ const Container = styled.div`
     }
   }
 `;
-
-export default Chat;

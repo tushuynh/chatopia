@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Picker from 'emoji-picker-react';
+import EmojiPicker from 'emoji-picker-react';
 import { IoMdSend } from 'react-icons/io';
 import { BsEmojiSmileFill } from 'react-icons/bs';
 
@@ -12,9 +12,9 @@ export default function ChatInput({ handleSendMsg }) {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
-  const handleEmojiClick = (event, emoji) => {
+  const handleEmojiClick = (event, emojiPicker) => {
     let message = msg;
-    message += emoji.emoji;
+    message += emojiPicker.emoji;
     setMsg(message);
   };
 
@@ -31,7 +31,7 @@ export default function ChatInput({ handleSendMsg }) {
       <div className="button-container">
         <div className="emoji">
           <BsEmojiSmileFill onClick={handleEmojiPickerHideShow} />
-          {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
+          {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
       <form className="input-container" onSubmit={(e) => sendChat(e)}>
@@ -93,6 +93,7 @@ const Container = styled.div`
         .emoji-search {
           background-color: transparent;
           border-color: #9186f3;
+          color: white;
         }
         .emoji-group:before {
           background-color: #080420;
@@ -115,6 +116,7 @@ const Container = styled.div`
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
+      height: 1.5rem;
       &::selection {
         background-color: #9186f3;
       }

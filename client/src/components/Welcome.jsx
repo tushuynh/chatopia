@@ -7,7 +7,7 @@ export default function Welcome({ currentUser }) {
     <Container>
       <img src={Robot} alt="Robot" />
       <h1>
-        Welcome, <span>{currentUser.username}!</span>
+        Welcome, <span>{currentUser.displayName}!</span>
       </h1>
       <h3>Please select a chat to Start Messaging.</h3>
     </Container>

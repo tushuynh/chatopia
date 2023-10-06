@@ -16,13 +16,13 @@ module.exports.register = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = (await User.create({
+    const user = await User.create({
       email,
       username,
       password: hashedPassword,
-    })).toObject()
+      displayName: username,
+    });
 
-    delete user.password;
     return res.json({ status: true, user });
   } catch (error) {
     next(error);
@@ -33,7 +33,16 @@ module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = (await User.findOne({ username })).toObject()
+    const user = (
+      await User.findOne({ username }).select([
+        'username',
+        'displayName',
+        'email',
+        'password',
+        'isAvatarImageSet',
+        'avatarImage',
+      ])
+    ).toObject();
     if (!user) {
       return res.json({ msg: 'Incorrect username.', status: false });
     }
@@ -79,9 +88,27 @@ module.exports.getAllUsers = async (req, res, next) => {
       'username',
       'avatarImage',
       '_id',
-    ])
+    ]);
 
     res.json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.setDisplayName = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const { displayName } = req.body;
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        displayName,
+      },
+      { new: true }
+    );
+    
+    res.json(user);
   } catch (error) {
     next(error);
   }
