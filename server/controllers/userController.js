@@ -33,8 +33,7 @@ module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    const user = (
-      await User.findOne({ username }).select([
+    let user = await User.findOne({ username }).select([
         'username',
         'displayName',
         'email',
@@ -42,7 +41,6 @@ module.exports.login = async (req, res, next) => {
         'isAvatarImageSet',
         'avatarImage',
       ])
-    ).toObject();
     if (!user) {
       return res.json({ msg: 'Incorrect username.', status: false });
     }
@@ -52,7 +50,6 @@ module.exports.login = async (req, res, next) => {
       return res.json({ msg: 'Incorrect password.', status: false });
     }
 
-    delete user.password;
     return res.json({ status: true, user });
   } catch (error) {
     next(error);

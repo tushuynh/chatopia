@@ -1,8 +1,8 @@
-export const host = 'http://localhost:5000';
-export const registerRoute = `${host}/api/auth/register`;
-export const loginRoute = `${host}/api/auth/login`;
-export const setAvatarRoute = `${host}/api/auth/setAvatar`;
-export const allUsersRoute = `${host}/api/auth/allUsers`;
-export const sendMessageRoute = `${host}/api/messages/addMsg`;
-export const getAllMessagesRoute = `${host}/api/messages/getMsg`;
-export const setDisplayNameRoute = `${host}/api/auth/setDisplayName`
+export const API_URL = process.env.REACT_APP_API_URL;
+export const registerRoute = `${API_URL}/api/auth/register`;
+export const loginRoute = `${API_URL}/api/auth/login`;
+export const setAvatarRoute = `${API_URL}/api/auth/setAvatar`;
+export const allUsersRoute = `${API_URL}/api/auth/allUsers`;
+export const sendMessageRoute = `${API_URL}/api/messages/addMsg`;
+export const getAllMessagesRoute = `${API_URL}/api/messages/getMsg`;
+export const setDisplayNameRoute = `${API_URL}/api/auth/setDisplayName`;

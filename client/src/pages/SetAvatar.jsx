@@ -56,7 +56,7 @@ export default function SetAvatar() {
         const image = await axios
           .get(
             `${api}/${Math.round(Math.random() * 1000)}?apikey=${
-              process.env.MULTIAVATAR_API_KEY
+              process.env.REACT_APP_MULTIAVATAR_API_KEY
             }`
           )
           .catch((err) => console.log(err));
