@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,9 +25,9 @@ export default function Login() {
 
   useEffect(() => {
     if (localStorage.getItem('chat-app-user')) {
-      navigate('/')
+      navigate('/');
     }
-  }, [navigate])
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,7 +78,7 @@ export default function Login() {
             placeholder="Username"
             name="username"
             onChange={(e) => handleChange(e)}
-            min = '3'
+            min="3"
           />
           <input
             type="password"
@@ -88,7 +88,7 @@ export default function Login() {
           />
           <button type="submit">Login In</button>
           <span>
-            Don't have an account ? <a href="/register">Register</a>
+            Don't have an account ? <Link to="/register">Register</Link>
           </span>
         </form>
       </FormContainer>

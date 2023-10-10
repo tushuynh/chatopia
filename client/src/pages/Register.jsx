@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -119,7 +119,7 @@ export default function Register() {
           />
           <button type="submit">Create user</button>
           <span>
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <Link to="/login">Login</Link>
           </span>
         </form>
       </FormContainer>

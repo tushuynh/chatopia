@@ -4,6 +4,7 @@ import Logo from '../assets/logo.svg';
 import axios from 'axios';
 import { setDisplayNameRoute } from '../utils/APIRoutes';
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 export default function Contacts({ contacts, currentUser, changeChat }) {
   const [currentUsername, setCurrentUsername] = useState(undefined);
@@ -87,12 +88,12 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
           </div>
           <div className="current-user">
             <div className="avatar">
-              <a href="/setAvatar">
+              <Link to="/setAvatar">
                 <img
                   src={`data:image/svg+xml;base64,${currentUserImage}`}
                   alt="avatar"
                 />
-              </a>
+              </Link>
             </div>
             <div className="username">
               {isEditDisplayName === true ? (
