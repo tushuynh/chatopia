@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./workspaces/server
+      dockerfile: ./dockerfile
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./workspaces/server/.env
+    networks:
+      - chatopia
+  
+  client:
+    build:
+      context: ./workspaces/client
+      dockerfile: ./dockerfile
+    container_name: client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./workspaces/client/.env
+    networks:
+      - chatopia
+
+networks:
+  chatopia:

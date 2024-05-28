@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug server",
+      "args": ["src/main.ts"],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "tsconfig-paths/register",
+        "-r",
+        "ts-node/register"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}"
+    },
+    {
+      "name": "Debug client",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "env": {
+        "PORT": "5000",
+        "MONGO_URL": "mongodb+srv://admin:SR2V5b03GootYzb1@chatopia.pl4djaa.mongodb.net/chatopia"
+      },
+    }
+  ]
+}

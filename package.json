@@ -1,0 +1,23 @@
+{
+  "name": "chatopia",
+  "version": "1.0.0",
+  "description": "",
+  "author": "tushuynh",
+  "license": "MIT",
+  "workspaces": [
+    "workspaces/*"
+  ],
+  "scripts": {
+    "start:server": "npm run start -w=server",
+    "start:client": "npm run start -w=client",
+    "dev:server": "npm run dev -w=server",
+    "dev:client": "npm run dev -w=client",
+    "build:server": "npm run build -w=server",
+    "build:client": "npm run build -w=client",
+    "enc:server": "npm run enc -w=server",
+    "enc:client": "npm run enc -w=client",
+    "dec:server": "npm run dec -w=server",
+    "dec:client": "npm run dec -w=client"
+  },
+  "keywords": []
+}
