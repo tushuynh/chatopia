@@ -4,3 +4,6 @@ scripts/
 
 .git
 .gitignore
+
+.dockerignore
+dockerfile
