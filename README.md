@@ -22,13 +22,13 @@ $ vlt config
 Encryption example
 
 ```bash
-$ yarn enc:client chatopiaClient {ENV}
+$ npm run enc:client chatopiaClient {ENV}
 ```
 
 Decryption example
 
 ```bash
-$ yarn dec:client chatopiaClient {ENV}
+$ npm run dec:client chatopiaClient {ENV}
 ```
 
 ## Run app
